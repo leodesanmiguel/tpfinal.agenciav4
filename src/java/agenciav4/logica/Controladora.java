@@ -113,6 +113,28 @@ public class Controladora {
 
     }
 
+    public void crearCliente( String frmNombre, String frmApellido, String frmDomicilio,
+            String frmDNI, String frmFechaN, String frmNacional,
+            String frmCelular, String frmEmail) {
+        
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha = Date.from(Instant.now());
+        try {
+            fecha = formato.parse(frmFechaN);
+        } catch (ParseException ex) {
+            Logger.getLogger(Controladora.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        int dn = Integer.parseInt(frmDNI);
+        Cliente c = new Cliente(frmNombre, frmApellido, frmNacional, dn, fecha, frmNacional, frmCelular, frmEmail);
+        
+        ctrlJPA.crear1Cliente(c);
+        
+    }
+
+    
+
    
 
 }

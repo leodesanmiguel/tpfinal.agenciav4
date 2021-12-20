@@ -630,4 +630,26 @@ public class ControladoraPersistencia {
         }
     }
 
+    public void crear1Cliente(Cliente c) {
+        
+        int dn = c.getDni();
+        
+        // verificando si ya existe Cliente
+            int nro = (int) verificarSiEsta("cliente", dn + "");
+
+            String esta = " **** ESTÁ CREADO DESDE ANTES";
+            if (nro == 0) {
+                clieJPA.create(c);
+                nro = clieJPA.getClienteCount();
+                esta = "  <<<  de C R E A C I Ó N  >>>";
+            }
+
+            Cliente em1 = clieJPA.findCliente(nro);
+            System.out.println("CLIENTE Nro: " + nro + esta
+                    + "\n" + em1);
+        
+        
+        
+    }
+
 }
