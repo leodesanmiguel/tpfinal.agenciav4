@@ -22,7 +22,7 @@ public class Paquete implements Serializable {
     private int idPaquete;
 
     private double costoPaquete;
-
+    private String nombrePaquete;
     private double descuento;
 
     @ManyToMany
@@ -32,9 +32,11 @@ public class Paquete implements Serializable {
     }
 
     public Paquete(double costoPaquete, double descuento,
+            String nombrePaquete,
             List<Servicio> servicios) {
         this.costoPaquete = costoPaquete;
         this.descuento = descuento;
+        this.nombrePaquete = nombrePaquete;
         this.servicios = servicios;
     }
 
@@ -54,6 +56,16 @@ public class Paquete implements Serializable {
         this.descuento = descuento;
     }
 
+    public String getNombrePaquete() {
+        return nombrePaquete;
+    }
+
+    public void setNombrePaquete(String nombrePaquete) {
+        this.nombrePaquete = nombrePaquete;
+    }
+
+    
+    
     public List<Servicio> getServicios() {
 
         return servicios;

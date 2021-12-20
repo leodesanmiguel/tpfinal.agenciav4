@@ -4,8 +4,10 @@ package agenciav4.logica;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,13 +19,14 @@ import javax.persistence.Table;
 @Table(name = "cliente")
 public class Cliente extends Persona implements Serializable {
 
-
+    
+    
     /**
      * Los clientes realizan compras puede haber una o varias Las compras son
      * las ventas de la AGENCIA
      *
      */
-    @OneToMany
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Venta> compras;
 
 
@@ -36,7 +39,7 @@ public class Cliente extends Persona implements Serializable {
         super(nombreP, apellidoP, direccionP, dni
                 , fechaNacio, nacionalidad, celular, email);
         
-        
+ 
     }
 
     
@@ -55,6 +58,6 @@ public class Cliente extends Persona implements Serializable {
                 + super.getApellidoP() + ", " + super.getNombreP() + "("+ super.getDni() +")";
     }
 
-    
+        
     
 }

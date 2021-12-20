@@ -1,9 +1,11 @@
 package agenciav4.logica;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,9 +38,9 @@ public class Venta implements Serializable {
     /**
      * Cada venta tiene un cliente como comprador
      */
-    @ManyToOne
-    @JoinColumn(name = "IDPERSONA", nullable = false)
-    private Cliente comprador;
+    @ManyToOne(targetEntity = Cliente.class)
+    @JoinColumn(name = "IDPERSONA")
+    private Cliente cliente;
 
     /**
      * Cada venta tiene un usuario que es empleado y tiene la funcion de
@@ -67,18 +69,18 @@ public class Venta implements Serializable {
     }
 
     public Venta(Date fechaVenta, double importe, String medioDPago,
-             boolean estaPago, Cliente comprador,
-             Usuario usuario, String Contratacion, Paquete paquete) {
+            boolean estaPago, Cliente cliente,
+            Usuario usuario, String Contratacion, Paquete paquete) {
 
         this.fechaVenta = fechaVenta;
         this.importe = importe;
         this.estaPago = estaPago;
-        this.comprador = comprador;
+        this.cliente = cliente;
         this.usuario = usuario;
         this.Contratacion = Contratacion;
         this.paquete = paquete;
         this.medioDPago = medioDPago;
-        
+
     }
 
     public int getIdVenta() {
@@ -118,11 +120,11 @@ public class Venta implements Serializable {
     }
 
     public Cliente getComprador() {
-        return comprador;
+        return cliente;
     }
 
-    public void setComprador(Cliente comprador) {
-        this.comprador = comprador;
+    public void setComprador(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public Usuario getUsuario() {
@@ -151,9 +153,12 @@ public class Venta implements Serializable {
 
     @Override
     public String toString() {
-        return "idVenta=" + idVenta + ", fechaVenta=" + fechaVenta
-                + "\n Comprador......: " + comprador.getApellidoP() + ", " + comprador.getNombreP()
-                + "\n Vendedor.......: " + usuario
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        String fe = sdf.format(fechaVenta);
+        
+        return " VENTA NRO: xxx " + ", fechaVenta=" + fe
+                                + "\n Vendedor.......: " + usuario
                 + "\n Contratacion...: " + Contratacion
                 + "\n Paquete=" + paquete.getIdPaquete() + " ($" + paquete.getCostoPaquete() + ")";
     }

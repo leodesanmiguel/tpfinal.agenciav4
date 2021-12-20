@@ -1,12 +1,15 @@
 package agenciav4.persistencia;
 
+import agenciav4.logica.Cliente;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import agenciav4.logica.Empleado;
 import agenciav4.logica.Paquete;
+import agenciav4.logica.Persona;
 import agenciav4.logica.Servicio;
 import agenciav4.logica.Usuario;
+import agenciav4.logica.Venta;
 import agenciav4.persistencia.exceptions.IllegalOrphanException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,8 +67,11 @@ public class ControladoraPersistencia {
         crearPaquetes();
         //  Crear Empleados y Usuarios
         crearEmpleados();
-        //  Crear Empleados y Usuarios
+        //  Crear Clientes
         crearClientes();
+
+        //  Crear Ventas
+        crearVentas();
 
     }
 
@@ -101,9 +107,16 @@ public class ControladoraPersistencia {
                     Date fechaServicio = new Date();
                     servi.setFechaServicio(fechaServicio);
                     servi.setCostoS(c[i]);
-                    serviJPA.create(servi);
-                    int nro = serviJPA.getServicioCount();
-                    System.out.println("Creo el servicio Nro: " + nro
+
+                    int nro = (int) verificarSiEsta("servicio", servi.getTipoDServicios());
+                    String esta = " **** ESTÁ CREADO DESDE ANTES";
+                    if (nro == 0) {
+                        serviJPA.create(servi);
+                        nro = serviJPA.getServicioCount();
+                        esta = "  <<<  de C R E A C I Ó N  >>>";
+                    }
+
+                    System.out.println("SERVICIO Nro: " + nro + esta
                             + "\n" + servi);
                 }
 
@@ -129,7 +142,7 @@ public class ControladoraPersistencia {
             double c = s.getCostoS();
             List<Servicio> se = new ArrayList<>();
             se.add(s);
-            Paquete pq = new Paquete(c, 0, se);
+            Paquete pq = new Paquete(c, 0, s.getTipoDServicios(), se);
             paqueJPA.create(pq);
             int nro = paqueJPA.getPaqueteCount();
             System.out.println("Creo el paquete Nro: " + nro
@@ -139,8 +152,12 @@ public class ControladoraPersistencia {
         // "PASAJE DE COLECTIVO", "PASAJE DE AVIÓN", "PASAJE DE TREN",
         // "EXCURSIÓN", "ENTRADAS A EVENTOS";
         int[][] ssr = {{1, 3}, {1, 2, 4}, {1, 3, 6}, {3, 6, 7}};
+        String[] ssn = new String[]{"Noche+bus", "Hotel+Auto+Avion",
+            "Hotel+Bus+Excursion", "bus+excursion+evento"};
 
+        int i = 0;
         for (int[] s : ssr) {
+
             List<Servicio> se = new ArrayList<>();
             double c = 0;
             for (int j = 0; j < s.length; j++) {
@@ -149,10 +166,19 @@ public class ControladoraPersistencia {
                 c += se1.getCostoS();
             }
             c *= 0.9;
-            Paquete pq = new Paquete(c, 0.1, se);
-            paqueJPA.create(pq);
-            int nro = paqueJPA.getPaqueteCount();
-            System.out.println("Creo el paquete Nro: " + nro
+            Paquete pq = new Paquete(c, 0.1, ssn[i], se);
+
+            // verificando si ya existe
+            int nro = (int) verificarSiEsta("paquete", ssn[i]);
+            i++;
+            String esta = " **** ESTÁ CREADO DESDE ANTES";
+            if (nro == 0) {
+                paqueJPA.create(pq);
+                nro = paqueJPA.getPaqueteCount();
+                esta = "  <<<  de C R E A C I Ó N  >>>";
+            }
+
+            System.out.println("PAQUETE Nro: " + nro + esta
                     + "\n" + pq);
 
         }
@@ -187,17 +213,7 @@ public class ControladoraPersistencia {
             {"DOMINGUEZ", "LUCÍA INÉS", "2320627498", "Chopin 445", "lucía.inés993@gmail.com", "Vendedor", "1987-05-09", "63900955", "70000"}};
 
         for (String[] e : eMs) {
-            /*
-            //0	1	2	3	4	5	6	7	8
-         //ape  nocom	cel	dire	emai	pues	naci	dni	suel
-            
-         // direccionP, 0, fechaNacio, nacionalidad, celular, email, suPuesto, tarea, 0
-            
-  public Empleado(String nombreP, String apellidoP, String direccionP,
-             int dni, Date fechaNacio, String nacionalidad,
-             String celular, String email,
-            String suPuesto, String tarea, double sueldo) {
-             */
+
             Date dat = new Date();
             int dn = Integer.parseInt(e[7]);
             double su = Double.parseDouble(e[8]);
@@ -214,23 +230,38 @@ public class ControladoraPersistencia {
                     e[2], e[4], e[5], "...", su);
             System.out.println("Empleado: " + em);
 
-            Usuario u = new Usuario( dn + "", "12345", true);
-            
-            userJPA.create(u);
-            int nro = userJPA.getUsuarioCount();
-            Usuario us1 = userJPA.findUsuario(nro);
-            System.out.println("Creo el Usuario Nro: " + nro
-                    + "\n" + us1);
-            
-            em.setUsuario(u);
+            Usuario u = new Usuario(dn + "", "12345", true);
 
-            empleJPA.create(em);
-            nro = paqueJPA.getPaqueteCount();
+            // verificando si ya existe usuario
+            int nro = (int) verificarSiEsta("usuario", dn + "");
+
+            String esta = " **** ESTÁ CREADO DESDE ANTES";
+            if (nro == 0) {
+                userJPA.create(u);
+                nro = userJPA.getUsuarioCount();
+                esta = "  <<<  de C R E A C I Ó N  >>>";
+            }
+            Usuario us1 = userJPA.findUsuario(nro);
+
+            System.out.println("USUARIO Nro: " + nro + esta
+                    + "\n" + us1);
+
+            em.setUsuario(us1);
+
+            // verificando si ya existe empleado
+            nro = (int) verificarSiEsta("empleado", dn + "");
+
+            esta = " **** ESTÁ CREADO DESDE ANTES";
+            if (nro == 0) {
+                empleJPA.create(em);
+                nro = paqueJPA.getPaqueteCount();
+                esta = "  <<<  de C R E A C I Ó N  >>>";
+            }
+
             Empleado em1 = empleJPA.findEmpleado(nro);
-            System.out.println("Creo el empleado Nro: " + nro
+            System.out.println("EMLEADO Nro: " + nro + esta
                     + "\n" + em1);
 
-           
         }
 
     }
@@ -240,8 +271,155 @@ public class ControladoraPersistencia {
      *
      * Crear al manos 10 clientes
      *
+     *
      */
     private void crearClientes() {
+
+        String[][] eMs = new String[][]{
+            {"AGUSTINELLI", "SOFIA ELENA", "1166837154", " Gabriel Miro 2881", "sofia.elena179@gmail.com", "33333333", "1970-06-25", "argentino"},
+            {"BALCASA", "ANDREA EVELYN", "1165164353", "Fernández Moreno 1415", "andrea.evelyn188@gmail.com", "77777777", "1988-06-19", "argentino"},
+            {"BARRIOS", "SONIA INES", "1150587598", "Rawson 5715", "sonia.ines941@gmail.com", "55611110", "1979-01-01", "argentino"},
+            {"CONTARDO", "JULIETA ANABELLA", "1122008549", "Salguero 1869", "julieta.anabella528@gmail.com", "89777776", "1964-01-10", "argentino"},
+            {"CORONEL", "KAREN AGUSTINA", "1167805264", "paez 1882", "karen.agustina615@gmail.com", "22244444", "1991-05-18", "argentino"},
+            {"CORTELL CUBÍ", "KAREN MICHELLE", "1135090901", "Lourdes 2657", "karen.michelle485@gmail.com", "33366666", "1990-09-20", "argentino"},
+            {"DOMINGUEZ", "DAIANA NOEMI", "2320437458", "Carlos Calvo 760", "daiana.noemi637@gmail.com", "11222222", "1978-06-02", "argentino"},
+            {"GAYOSO",
+                "MALENA SOLANA AGUSTINA", "1128679238", "25 DE MAYO 1496", "malena.solana.agustina671@gmail.com", "22224444", "1994-04-18", "argentino"},
+            {"GIORGI",
+                "ELIANA AGUSTINA", "2320696354", "12 de Octubre 2431", "eliana.agustina825@gmail.com", "56111110", "1983-07-24", "argentino"},
+            {"GRISETTI",
+                "MARÍA ANGÉLICA", "1160368533", "Paraguay 215", "maría.angélica615@gmail.com", "88888888", "1980-04-20", "argentino"},
+            {"INSAURRALDE",
+                "FLORENCIA ROMINA", "1136101561", "blandegue", "florencia.romina253@gmail.com", "77855554", "1962-01-07", "argentino"},
+            {"JOHO",
+                "FREDDY RAUL", "2320696806", "Arias 3300 Manzana 1 Casa 8", "freddy.raul808@gmail.com", "77785554", "1963-07-05", "argentino"},
+            {"JUAREZ",
+                "MATIAS", "1525155527", "Gregorio Marañon 3748", "matias471@gmail.com", "55561110", "1974-12-14", "argentino"},
+            {"LEIVA",
+                "MELINA FLAVIA", "2320453039", "PAULA ALBARRACIN 2041", "melina.flavia171@gmail.com", "99999999", "1977-10-01", "argentino"},
+            {"LEZCANO DE ROCCO",
+                "PAOLA DEL CARMEN", "1165116425", "ZUVIRIA 4439", "paola.del.carmen361@gmail.com", "44888888", "1975-03-03", "argentino"},
+            {"LOVASCHI",
+                "JOHANNA ELIZABETH", "1140986245", "LABARDEN 1415", "johanna.elizabeth389@gmail.com", "66666666", "1967-06-18", "argentino"},
+            {"MARTINEZ",
+                "JUAN GABRIEL", "2320551282", "Avenida Croacia 340", "juan.gabriel160@gmail.com", "67333332", "1967-08-05", "argentino"},
+            {"NAVARRO",
+                "LUCÍA INÉS", "1144947521", "GRANADERO BAIGORRIA 5612", "lucía.inés276@gmail.com", "55555555", "1962-09-24", "argentino"},
+            {"ROMERO",
+                "JUANA MARÍA", "1123864132", "MARCELO T DE ALVEAR 130", "juana.maría248@gmail.com", "44448888", "1966-05-19", "argentino"},
+            {"ROMERO",
+                "MARIA DE LA PAZ", "1154002857", "Luis Maria Campos 2178  ", "maria.de.la.paz333@gmail.com", "22444444", "1995-09-24", "argentino"},
+            {"SULLCA",
+                "LUCILA BELEN", "1165711345", "Corbeta Uruguay 3370", "lucila.belen106@gmail.com", "11122222", "1980-03-20", "argentino"},
+            {"THOMPSON",
+                "MICAELA FLORENCIA", "1154320501", "EMILIO ZOLA 2084", "micaela.florencia816@gmail.com", "33666666", "1999-11-23", "argentino"},
+            {"TORRES",
+                "MALENA SOLANA AGUSTINA", "2320484477", "Arechavala 5383", "malena.solana.agustina604@gmail.com", "66673332", "1993-03-09", "argentino"},
+            {"VERA",
+                "ROSANA ANDREA", "1140518526", "Santiago del Estero 2575", "rosana.andrea593@gmail.com", "44488888", "1968-02-13", "argentino"},
+            {"VERGARA",
+                "MARIA DE LA PAZ", "1121038044", "Arturo Capdevilla 336", "maria.de.la.paz121@gmail.com", "33336666", "1977-08-28", "argentino"},};
+
+        for (String[] e : eMs) {
+//  0               1               2                   3               4                 5         6               7            
+//"AGUSTINELLI", "SOFIA ELENA", "1166837154", " Gabriel Miro 2881", "sofi@gmail.com", "33333333", "1970-06-25", "argentino"
+            Date dat = new Date();
+            int dn = Integer.parseInt(e[5]);
+
+            //String fe = e[6];
+            try {
+                dat = new SimpleDateFormat("yyyy-MM-dd").parse(e[6]);
+            } catch (ParseException ex) {
+                Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //public Cliente( String nombreP, String apellidoP, String direccionP
+            //             , int dni, Date fechaNacio, String nacionalidad
+            //             , String celular, String email)
+            Cliente em = new Cliente(
+                    e[1], e[0], e[3],
+                    dn, dat, e[7],
+                    e[2], e[4]);
+            System.out.println("Cliente: " + em);
+
+            // verificando si ya existe Cliente
+            int nro = (int) verificarSiEsta("cliente", dn + "");
+
+            String esta = " **** ESTÁ CREADO DESDE ANTES";
+            if (nro == 0) {
+                clieJPA.create(em);
+                nro = clieJPA.getClienteCount();
+                esta = "  <<<  de C R E A C I Ó N  >>>";
+            }
+
+            Cliente em1 = clieJPA.findCliente(nro);
+            System.out.println("CLIENTE Nro: " + nro + esta
+                    + "\n" + em1);
+
+        }
+
+    }
+
+    /**
+     * VENTAS
+     *
+     * Crear al manos 10 VENTAS
+     *
+     *
+     */
+    public void crearVentas() {
+
+        // Usuarios que van a operar
+        int[] usr = {45653845, 52037316, 71820903, 56828023};
+
+        // Crear una lista de clientes que compra
+        int[] cli = {66733332, 77855554, 88977776, 11222222, 22444444,
+            33666666, 44888888, 56111110, 67333332, 78555554};
+
+        //  paquetes qie van a comprar
+        int[] paq = {1, 2, 3, 4, 10, 11, 6, 5, 8, 9};
+
+        //  medios de Pago:  uno por cada venta
+        int[] med = {1, 2, 3, 4, 5, 1, 2, 3, 4, 5};
+
+        // fecha de venta
+        String[] fec = new String[]{"2001-06-15", "2013-11-03", "2016-11-25",
+            "2020-01-25", "2012-11-14", "2012-08-25", "2018-09-03",
+            "2021-06-14", "2008-03-31", "2015-04-27"};
+
+        int li = 0;
+        int ls = 4;
+        Date dat = new Date();
+        for (int u = usr.length - 1; u > -1; u--) {
+            Usuario usuario = buscarUsuario(usr[u]);
+
+            for (int c = li; c < ls; c++) {
+                Cliente cliente = buscarComprador(cli[c]);
+                Paquete paquete = buscarPaquete(paq[c]);
+                String medio = buscarMedio(med[c]);
+                double comis = buscarComision(med[c]);
+
+                try {
+                    dat = new SimpleDateFormat("yyyy-MM-dd").parse(fec[c]);
+                } catch (ParseException ex) {
+                    Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                double importe = calcularImporteVta(paquete, comis, 1);
+
+                String contratacion = buscarContratacion(paquete.getDescuento());
+
+                Venta vta = new Venta(dat, importe, medio, true, cliente, usuario, contratacion, paquete);
+                ventaJPA.create(vta);
+                int nro = clieJPA.getClienteCount();
+                System.out.println(" ✨ *** V E N T A Nro: " + nro
+                        + "\n" + vta);
+
+            }
+            li = ls;
+            ls = ls + u ;
+
+        }
 
     }
 
@@ -259,4 +437,155 @@ public class ControladoraPersistencia {
         return existe;
     }
 
+    public int verificarSiEsta(String queCosa, String identifi) {
+        switch (queCosa) {
+            case "servicio":
+                List<Servicio> ss = serviJPA.findServicioEntities();
+                for (Servicio s : ss) {
+                    if (identifi.equals(s.getTipoDServicios())) {
+                        return (int) s.getIdServicio();
+                    }
+                }
+                break;
+
+            case "empleado":
+                List<Empleado> ee = empleJPA.findEmpleadoEntities();
+                for (Empleado s : ee) {
+
+                    if (identifi.equals(s.getDni() + "")) {
+                        return (int) s.getIdPersona();
+                    }
+                }
+                break;
+            case "usuario":
+                List<Usuario> uu = userJPA.findUsuarioEntities();
+                for (Usuario s : uu) {
+
+                    if (identifi.equals(s.getNombreUsr())) {
+                        return (int) s.getIdUser();
+                    }
+                }
+                break;
+            case "paquete":
+                List<Paquete> pp = paqueJPA.findPaqueteEntities();
+                for (Paquete s : pp) {
+                    if (identifi.equals(s.getNombrePaquete())) {
+                        return (int) s.getIdPaquete();
+                    }
+                }
+                break;
+
+            case "cliente":
+                List<Cliente> cc = clieJPA.findClienteEntities();
+                for (Cliente s : cc) {
+
+                    if (identifi.equals(s.getDni() + "")) {
+                        return (int) s.getIdCliente();
+                    }
+                }
+                break;
+
+        }
+        return 0;
+    }
+
+    public Usuario buscarUsuario(int dni) {
+
+        try {
+
+            List<Usuario> uss = userJPA.findUsuarioEntities();
+            for (Usuario u : uss) {
+                if (u.getNombreUsr().equals(dni + "")) {
+                    return u;
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("\n ERROR AL TRATAR DE BUSCAR USUARIO POR DNI."
+                    + "\n" + e);
+
+        }
+        return null;
+
+    }
+
+    public Cliente buscarComprador(int dni) {
+
+        try {
+
+            List<Cliente> css = clieJPA.findClienteEntities();
+            for (Cliente u : css) {
+                if (u.getDni() == dni) {
+                    return u;
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("\n ERROR AL TRATAR DE BUSCAR USUARIO POR DNI."
+                    + "\n" + e);
+
+        }
+        return null;
+    }
+
+    public Paquete buscarPaquete(int idPaquete) {
+
+        try {
+            return paqueJPA.findPaquete(idPaquete);
+
+        } catch (Exception e) {
+            System.out.println("\n ERROR AL TRATAR DE BUSCAR USUARIO POR DNI."
+                    + "\n" + e);
+
+        }
+        return null;
+    }
+
+    public String buscarMedio(int m) {
+
+        switch (m) {
+            case 1:
+                return "Efectivo: Sin comisión";
+            case 2:
+                return "Tarjeta de Débito: 3%";
+            case 3:
+                return "Tarjeta de Crédito: 9%";
+            case 4:
+                return "Monedero Virtual: Sin comisión";
+            case 5:
+                return "Transferencia: 2.45%";
+        }
+        return null;
+    }
+
+    public double buscarComision(int m) {
+
+        switch (m) {
+            case 1:
+                return 0.0;
+            case 2:
+                return 0.03;
+            case 3:
+                return 0.09;
+            case 4:
+                return 0.0;
+            case 5:
+                return 0.0245;
+        }
+        return 0;
+    }
+
+    public double calcularImporteVta(Paquete paqu, double comi, int cant) {
+
+        return cant * (double) paqu.getCostoPaquete() * (1 + (comi));
+
+    }
+
+    public String buscarContratacion(double dto) {
+
+        if (dto != 0) {
+            return "PAQUETE";
+        }
+        return "INDIVIDUAL";
+    }
 }
