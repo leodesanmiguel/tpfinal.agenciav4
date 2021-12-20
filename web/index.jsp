@@ -93,14 +93,12 @@
                         </div>
                         <div class="col-xs-8 text-right menu-1">
                             <ul>
-                                <li><a href="destination.jsp">Destino</a></li>
+                                <li><a href="clientes.jsp">Clientes</a></li>
                                 <li class="has-dropdown">
-                                    <a href="#">Viajes</a>
+                                    <a href="#">Ventas</a>
                                     <ul class="dropdown">
-                                        <li><a href="#">Exterior</a></li>
-                                        <li><a href="#">Argentina</a></li>
-                                        <li><a href="#">Turismo</a></li>
-                                        <li><a href="#">Directo</a></li>
+                                        <li><a href="ventasind.jsp">Individual</a></li>
+                                        <li><a href="ventaspaq.jsp">Paquete</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="pricing.jsp">Precios</a></li>
@@ -108,10 +106,10 @@
                                 <li class="has-dropdown">
                                     <a href="#">Admin</a>
                                     <ul class="dropdown">
-                                        <li><a href="empleado.jsp">Empleados</a></li>
-                                        <li><a href="#">Servicios</a></li>
-                                        <li><a href="#">Paquetes</a></li>
-                                        <li><a href="#">Ventas</a></li>
+                                        <li><a href="empleados.jsp">Empleados</a></li>
+                                        <li><a href="servicios.jsp">Servicios</a></li>
+                                        <li><a href="paquetes.jsp">Paquetes</a></li>
+                                        <li><a href="ventas.jsp">Ventas</a></li>
                                     </ul>
                                 </li>
 

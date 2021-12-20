@@ -11,6 +11,7 @@ import agenciav4.logica.Servicio;
 import agenciav4.logica.Usuario;
 import agenciav4.logica.Venta;
 import agenciav4.persistencia.exceptions.IllegalOrphanException;
+import agenciav4.persistencia.exceptions.NonexistentEntityException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -417,7 +418,7 @@ public class ControladoraPersistencia {
 
             }
             li = ls;
-            ls = ls + u ;
+            ls = ls + u;
 
         }
 
@@ -588,4 +589,45 @@ public class ControladoraPersistencia {
         }
         return "INDIVIDUAL";
     }
+
+    public List<Cliente> obtenerClientes() {
+        return clieJPA.findClienteEntities();
+    }
+
+    public boolean borrarCliente(int dn) {
+
+        Cliente c = buscarComprador(dn);
+        int id = c.getIdPersona();
+        try {
+            clieJPA.destroy(id);
+            return true;
+
+        } catch (IllegalOrphanException | NonexistentEntityException e) {
+            System.out.println("\n *** No se Borro el cliente \n" + e);
+        }
+        return false;
+    }
+
+    public Cliente obtener1Cliente(int dn) {
+
+        try {
+            Cliente c = buscarComprador(dn);
+            int id = c.getIdPersona();
+            return clieJPA.findCliente(id);
+
+        } catch (Exception e) {
+            System.out.println("\n *** NO ENCONTGRÓ EL CLIENTE \n" + e);
+        }
+        return null;
+    }
+
+    public void editarCliente(Cliente c) {
+        try {
+            clieJPA.edit(c);
+            
+        } catch (Exception e) {
+             System.out.println("\n *** NO se pudo E D I T A R  EL CLIENTE \n" + e);
+        }
+    }
+
 }

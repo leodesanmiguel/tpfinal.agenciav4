@@ -1,18 +1,12 @@
 <%-- 
     Document   : empleado
     Created on : 5 dic. 2021, 23:15:34
-    Author     : Leo Martinez
+    Author     : profl
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML>
-
-<!--
-	Traveler by freehtml5.co
-	Twitter: http://twitter.com/fh5co
-	URL: http://freehtml5.co
--->
-<html lang="es">
+<!DOCTYPE html>
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -84,27 +78,25 @@
                     </div>
                     <div class="col-xs-8 text-right menu-1">
                         <ul>
-                            <li><a href="destination.jsp">Destino</a></li>
-                            <li class="has-dropdown">
-                                <a href="#">Viajes</a>
-                                <ul class="dropdown">
-                                    <li><a href="#">Exterior</a></li>
-                                    <li><a href="#">Argentina</a></li>
-                                    <li><a href="#">Turismo</a></li>
-                                    <li><a href="#">Directo</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="pricing.jsp">Precios</a></li>
-                            <li><a href="contact.jsp">Contacto</a></li>
-                            <li class="has-dropdown">
-                                <a href="#">Admin</a>
-                                <ul class="dropdown">
-                                    <li><a href="empleado.jsp">Empleados</a></li>
-                                    <li><a href="#">Servicios</a></li>
-                                    <li><a href="#">Paquetes</a></li>
-                                    <li><a href="#">Ventas</a></li>
-                                </ul>
-                            </li>
+                                <li><a href="clientes.jsp">Clientes</a></li>
+                                <li class="has-dropdown">
+                                    <a href="#">Ventas</a>
+                                    <ul class="dropdown">
+                                        <li><a href="ventasind.jsp">Individual</a></li>
+                                        <li><a href="ventaspaq.jsp">Paquete</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="pricing.jsp">Precios</a></li>
+                                <li><a href="contact.jsp">Contacto</a></li>
+                                <li class="has-dropdown">
+                                    <a href="#">Admin</a>
+                                    <ul class="dropdown">
+                                        <li><a href="empleados.jsp">Empleados</a></li>
+                                        <li><a href="servicios.jsp">Servicios</a></li>
+                                        <li><a href="paquetes.jsp">Paquetes</a></li>
+                                        <li><a href="ventas.jsp">Ventas</a></li>
+                                    </ul>
+                                </li>
 
                         </ul>
                     </div>
@@ -113,8 +105,8 @@
 
             </div>
         </nav>
-
-        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(images/img_6.jpg)">
+        
+        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(images/img_emp.jpg)">
             <div class="overlay"></div>
             <div class="gtco-container">
                 <div class="row">
@@ -122,7 +114,7 @@
                         <div class="row row-mt-15em">
 
                             <div class="col-md-12 mt-text animate-box" data-animate-effect="fadeInUp">
-                                <h1>Destinos</h1>
+                                <h1>Datos de los Empleados</h1>
                             </div>
 
                         </div>
@@ -130,133 +122,80 @@
                     </div>
                 </div>
             </div>
-        </header>
+        </header>        
 
-        <div class="gtco-section">
+        
+        <div class="gtco-section border-bottom">
             <div class="gtco-container">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                        <h2>Paquetes Mas Populares</h2>
-                        <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="images/img_1.jpg" class="fh5co-card-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="images/img_1.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>Viajes al Exterior</h2>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                <p><span class="btn btn-primary">Programar un viaje</span></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="images/img_2.jpg" class="fh5co-card-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="images/img_2.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>Viajes por Argentina</h2>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                <p><span class="btn btn-primary">Programar un viaje</span></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="images/img_3.jpg" class="fh5co-card-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="images/img_3.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>Viaje Directo</h2>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                <p><span class="btn btn-primary">Programar un viaje</span></p>
-                            </div>
-                        </a>
-                    </div>
-
-
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="images/img_4.jpg" class="fh5co-card-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="images/img_4.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>Turismo en Mendoza</h2>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                <p><span class="btn btn-primary">Programar un viaje</span></p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="images/img_5.jpg" class="fh5co-card-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="images/img_5.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>Turismo en Bariloche</h2>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                <p><span class="btn btn-primary">Programar un viaje</span></p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="images/img_6.jpg" class="fh5co-card-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="images/img_6.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>Turismo en Misiones</h2>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                <p><span class="btn btn-primary">Programar un viaje</span></p>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-
-        <div id="gtco-subscribe">
-            <div class="gtco-container">
-                <div class="row animate-box">
-                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                        <h2>Subscribe</h2>
-                        <p>Sea el primero en conocer los nuevos paquetes turisticos.</p>
-                    </div>
-                </div>
-                <div class="row animate-box">
-                    <div class="col-md-8 col-md-offset-2">
-                        <form class="form-inline" action=>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-group">
-                                    <label for="email" class="sr-only">Email</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Su correo electrónico">
+                    <div class="col-md-12">
+                        <div class="col-md-6 animate-box">
+                            <h3>Get In Touch</h3>
+                            <form action="svrEmpleado" method="POST">
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="sr-only" for="nombre">Nombre</label>
+                                        <input type="text" id="nombre" class="form-control" placeholder="ingrese su nombre">
+                                    </div>
                                 </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="sr-only" for="apellido">Apellido</label>
+                                        <input type="text" id="apellido" class="form-control" placeholder="ingrese su apellido">
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="sr-only" for="email">Email</label>
+                                        <input type="text" id="email" class="form-control" placeholder="su correo electrónico">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="sr-only" for="celular">Celular</label>
+                                        <input type="text" id="celular" class="form-control" placeholder="su núrmero de celular">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="sr-only" for="subject">Subject</label>
+                                        <input type="text" id="subject" class="form-control" placeholder="Escriba un motivo">
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="sr-only" for="message">Mensaje</label>
+                                        <textarea name="message" id="message" cols="30" rows="5" class="form-control" placeholder="Escriba su mensaje o su consulta"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Enviar Mensaje" class="btn btn-primary">
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-md-5 col-md-push-1 animate-box">
+
+                            <div class="gtco-contact-info">
+                                <h3>Contact Information</h3>
+                                <ul>
+                                    <li class="address">Av. Rivadavia 1234, <br>Suite 721 Buenos Aires ARG 1000</li>
+                                    <li class="phone"><a href="tel://123456789">+54 1235 2355 9888</a></li>
+                                    <li class="email"><a href="mailto:info@agenciapolo.com.ar">info@agenciapolo.com.ar</a></li>
+                                    <li class="url"><a href="https://freehtml5.co">FreeHTML5.co</a></li>
+                                </ul>
                             </div>
-                            <div class="col-md-6 col-sm-6">
-                                <button type="submit" class="btn btn-default btn-block">Subscribe</button>
-                            </div>
-                        </form>
+
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        
         <footer id="gtco-footer" role="contentinfo">
             <div class="gtco-container">
                 <div class="row row-p	b-md">
