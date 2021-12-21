@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import static java.time.LocalDate.now;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -133,6 +134,22 @@ public class Controladora {
         
     }
 
+    public List<Paquete> obtenerIndividuales(){
+        return ctrlJPA.obtenerIndividuales();
+        
+    }
+
+    public List<Paquete> obtenerPaquetes(){
+        return ctrlJPA.obtenerPaquetes();
+        
+    }
+    
+    public List<Servicio> obtenerServicios(Paquete c){
+
+        
+        return c.getServicios();
+        
+    }
     
 
    

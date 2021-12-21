@@ -624,32 +624,64 @@ public class ControladoraPersistencia {
     public void editarCliente(Cliente c) {
         try {
             clieJPA.edit(c);
-            
+
         } catch (Exception e) {
-             System.out.println("\n *** NO se pudo E D I T A R  EL CLIENTE \n" + e);
+            System.out.println("\n *** NO se pudo E D I T A R  EL CLIENTE \n" + e);
         }
     }
 
     public void crear1Cliente(Cliente c) {
-        
+
         int dn = c.getDni();
-        
+
         // verificando si ya existe Cliente
-            int nro = (int) verificarSiEsta("cliente", dn + "");
+        int nro = (int) verificarSiEsta("cliente", dn + "");
 
-            String esta = " **** ESTÁ CREADO DESDE ANTES";
-            if (nro == 0) {
-                clieJPA.create(c);
-                nro = clieJPA.getClienteCount();
-                esta = "  <<<  de C R E A C I Ó N  >>>";
-            }
+        String esta = " **** ESTÁ CREADO DESDE ANTES";
+        if (nro == 0) {
+            clieJPA.create(c);
+            nro = clieJPA.getClienteCount();
+            esta = "  <<<  de C R E A C I Ó N  >>>";
+        }
 
-            Cliente em1 = clieJPA.findCliente(nro);
-            System.out.println("CLIENTE Nro: " + nro + esta
-                    + "\n" + em1);
-        
-        
-        
+        Cliente em1 = clieJPA.findCliente(nro);
+        System.out.println("CLIENTE Nro: " + nro + esta
+                + "\n" + em1);
+
     }
 
+    public List<Paquete> obtenerIndividuales() {
+        List<Paquete> qq = new ArrayList<>();
+        List<Paquete> pqss = paqueJPA.findPaqueteEntities();
+        for (Paquete q : pqss) {
+            if (q.getDescuento() == 0) {
+                qq.add(q);
+            }
+        }
+        return qq;
+    }
+    
+       public List<Paquete> obtenerPaquetes() {
+        List<Paquete> qq = new ArrayList<>();
+        List<Paquete> pqss = paqueJPA.findPaqueteEntities();
+        for (Paquete q : pqss) {
+            if (q.getDescuento() != 0) {
+                qq.add(q);
+            }
+        }
+        return qq;
+    }
+     
+       
+       
+          public List<Servicio> obtenerServicios(Paquete c) {
+        List<Servicio> qq = new ArrayList<>();
+        List<Servicio> pqss = c.getServicios();
+        for (Servicio q : pqss) {
+            qq.add(q);
+        }
+        return qq;
+    }
+       
+       
 }

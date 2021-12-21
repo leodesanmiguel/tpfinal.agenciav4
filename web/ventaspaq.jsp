@@ -1,12 +1,21 @@
 <%-- 
-    Document   : newjsp
-    Created on : 18 dic. 2021, 19:36:13
-    Author     : profl
+    Document   : empleado
+    Created on : 5 dic. 2021, 23:15:34
+    Author     : Leo Martinez
 --%>
 
+<%@page import="agenciav4.logica.Servicio"%>
+<%@page import="agenciav4.logica.Paquete"%>
+<%@page import="java.util.List"%>
+<%@page import="agenciav4.logica.Controladora"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE HTML>
+<!--
+        Traveler by freehtml5.co
+        Twitter: http://twitter.com/fh5co
+        URL: http://freehtml5.co
+-->
+<html>
 
     <head>
         <meta charset="utf-8">
@@ -14,8 +23,7 @@
         <title>Leo Martinez 20754731 &mdash; Trabajo Integrador 2021 - comisión 2 </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Leo Martinez 20754731 - Trabajo Integrador 2021 - comisión 2 " />
-        <meta name="keywords" content="free website templates, free html5, free template, free bootstrap, 
-              free website template, html5, css3, mobile first, responsive" />
+        <meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
         <meta name="author" content="FreeHTML5.co" />
 
         <!-- Facebook and Twitter integration -->
@@ -63,7 +71,15 @@
     </head>
 
     <body>
-        
+        <%
+            String user = (String) request.getSession().getAttribute("user");
+            String pass = (String) request.getSession().getAttribute("pass");
+            if (user == null && pass == null) {
+                response.sendRedirect("inicial.jsp");
+            }
+
+        %>
+
         <div class="gtco-loader"></div>
 
         <div id="page">
@@ -103,225 +119,133 @@
                         </div>
                     </div>
 
+
                 </div>
             </nav>
 
-            <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/img_bg_2.jpg)">
+            <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(images/img_2.jpg)">
                 <div class="overlay"></div>
                 <div class="gtco-container">
                     <div class="row">
-                        <div class="col-md-12 col-md-offset-0 text-left">
-
-
+                        <div class="col-md-12 col-md-offset-0 text-center">
                             <div class="row row-mt-15em">
-                                <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-                                    <h1>U S U A R I O<br>NO VERIFICADO</h1>
-                                </div>
-                                <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
-                                    
-                                </div>
-                            </div>
 
+                                <div class="col-md-12 mt-text animate-box" data-animate-effect="fadeInUp">
+                                    <h1>Servicios Turisticos por Paquetes</h1>
+                                </div>
+
+                            </div>
 
                         </div>
                     </div>
                 </div>
             </header>
 
-            <div class="gtco-section">
+            <!-- TABLA DE SERVICIOS INDIVIDUALES -->
+
+            <%  Controladora ctrl = new Controladora();
+                List<Paquete> pss = ctrl.obtenerPaquetes();
+            %>
+
+            <%  %>
+
+            <div class="gtco-section border-bottom">
                 <div class="gtco-container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                            <h2>Paquetes Mas Populares</h2>
-                            <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+                            <h2>Elija El Mejor Servicio <br>Para Usted</h2>
+                            <p>Únase a más de 1 millón de usuarios. Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
                         </div>
                     </div>
+
+                    <%! int cc = 0;%>
+                    <%
+                        for (Paquete c : pss) {
+
+                            List<Servicio> sss = c.getServicios();
+                    %>
+
+                    <% if (cc % 3 == 0) {%>
                     <div class="row">
+                        <% }%>
 
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <a href="images/img_1.jpg" class="fh5co-card-item image-popup">
-                                <figure>
-                                    <div class="overlay"><i class="ti-plus"></i></div>
-                                    <img src="images/img_1.jpg" alt="Image" class="img-responsive">
-                                </figure>
-                                <div class="fh5co-text">
-                                    <h2>Viajes al Exterior</h2>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                    <p><span class="btn btn-primary">Programar un viaje</span></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <a href="images/img_2.jpg" class="fh5co-card-item image-popup">
-                                <figure>
-                                    <div class="overlay"><i class="ti-plus"></i></div>
-                                    <img src="images/img_2.jpg" alt="Image" class="img-responsive">
-                                </figure>
-                                <div class="fh5co-text">
-                                    <h2>Viajes por Argentina</h2>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                    <p><span class="btn btn-primary">Programar un viaje</span></p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <a href="images/img_3.jpg" class="fh5co-card-item image-popup">
-                                <figure>
-                                    <div class="overlay"><i class="ti-plus"></i></div>
-                                    <img src="images/img_3.jpg" alt="Image" class="img-responsive">
-                                </figure>
-                                <div class="fh5co-text">
-                                    <h2>Viaje Directo</h2>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                    <p><span class="btn btn-primary">Programar un viaje</span></p>
-                                </div>
-                            </a>
+
+                        <div class="col-md-4">
+                            <div class="price-box">
+                                <h2 class="pricing-plan">PaK <%= c.getIdPaquete()+"" %></h2>
+                                <div class="price"><sup class="currency">$</sup><%="" + c.getCostoPaquete() + ""%><small>/srv</small></div>
+                                <p><%=c.getNombrePaquete()%></p>
+                                <p>Descuento : <%=c.getDescuento() * 100%> %</p>
+                                <hr>
+                                <ul class="pricing-info">
+                                    <%
+
+                                        for (Servicio s : sss) {
+                                    %>
+                                    <li><%= s.getTipoDServicios() %></li>
+                                    <%  }%>
+                                    
+                                    <li> </li>
+                                    
+                                </ul>
+                                <a href="#" class="btn btn-default btn-sm">Empezar</a>
+                            </div>
                         </div>
 
 
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <a href="images/img_4.jpg" class="fh5co-card-item image-popup">
-                                <figure>
-                                    <div class="overlay"><i class="ti-plus"></i></div>
-                                    <img src="images/img_4.jpg" alt="Image" class="img-responsive">
-                                </figure>
-                                <div class="fh5co-text">
-                                    <h2>Turismo en Mendoza</h2>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                    <p><span class="btn btn-primary">Programar un viaje</span></p>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <a href="images/img_5.jpg" class="fh5co-card-item image-popup">
-                                <figure>
-                                    <div class="overlay"><i class="ti-plus"></i></div>
-                                    <img src="images/img_5.jpg" alt="Image" class="img-responsive">
-                                </figure>
-                                <div class="fh5co-text">
-                                    <h2>Turismo en Bariloche</h2>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                    <p><span class="btn btn-primary">Programar un viaje</span></p>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <a href="images/img_6.jpg" class="fh5co-card-item image-popup">
-                                <figure>
-                                    <div class="overlay"><i class="ti-plus"></i></div>
-                                    <img src="images/img_6.jpg" alt="Image" class="img-responsive">
-                                </figure>
-                                <div class="fh5co-text">
-                                    <h2>Turismo en Misiones</h2>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-                                    <p><span class="btn btn-primary">Programar un viaje</span></p>
-                                </div>
-                            </a>
-                        </div>
-
+                        <%if (cc % 3 == 0) {
+                                cc = 0;
+                        %>
                     </div>
+                    <% }
+                        cc++;
+                    %>                                    
+
+                    <% }%> 
+
                 </div>
             </div>
 
-            <div id="gtco-features">
+            <div class="gtco-section">
                 <div class="gtco-container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
-                            <h2>¿Cómo funciona?</h2>
+                            <h2>Preguntas Frecuentes</h2>
                             <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 col-sm-6">
-                            <div class="feature-center animate-box" data-animate-effect="fadeIn">
-                                <span class="icon">
-                                    <i>1</i>
-                                </span>
-                                <h3>Lorem ipsum dolor sit amet</h3>
-                                <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="feature-center animate-box" data-animate-effect="fadeIn">
-                                <span class="icon">
-                                    <i>2</i>
-                                </span>
-                                <h3>Consectetur adipisicing elit</h3>
-                                <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="feature-center animate-box" data-animate-effect="fadeIn">
-                                <span class="icon">
-                                    <i>3</i>
-                                </span>
-                                <h3>Dignissimos asperiores vitae</h3>
-                                <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="gtco-cover gtco-cover-sm" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
-                <div class="overlay"></div>
-                <div class="gtco-container text-center">
-                    <div class="display-t">
-                        <div class="display-tc">
-                            <h1>¡Contamos con servicios de alta calidad que seguro te encantarán!</h1>
+                        <div class="col-md-8 col-md-offset-2">
+                            <ul class="fh5co-faq-list">
+                                <li class="animate-box">
+                                    <h2>¿Que es un Paquete?</h2>
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                                </li>
+                                <li class="animate-box">
+                                    <h2>What language are available?</h2>
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                                </li>
+                                <li class="animate-box">
+                                    <h2>I have technical problem, who do I email?</h2>
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                                </li>
+                                <li class="animate-box">
+                                    <h2>Can I have a username that is already taken?</h2>
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                                </li>
+                                <li class="animate-box">
+                                    <h2>How do I use Traveler features?</h2>
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                                </li>
+                                <li class="animate-box">
+                                    <h2>Is Traveler free??</h2>
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div id="gtco-counter" class="gtco-section">
-                <div class="gtco-container">
-
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
-                            <h2>Nuestros Logros</h2>
-                            <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                            <div class="feature-center">
-                                <span class="counter js-counter" data-from="0" data-to="196" data-speed="5000" data-refresh-interval="50">1</span>
-                                <span class="counter-label">Destinos</span>
-
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                            <div class="feature-center">
-                                <span class="counter js-counter" data-from="0" data-to="97" data-speed="5000" data-refresh-interval="50">1</span>
-                                <span class="counter-label">Hoteles</span>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                            <div class="feature-center">
-                                <span class="counter js-counter" data-from="0" data-to="12402" data-speed="5000" data-refresh-interval="50">1</span>
-                                <span class="counter-label">Viejeros</span>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                            <div class="feature-center">
-                                <span class="counter js-counter" data-from="0" data-to="12202" data-speed="5000" data-refresh-interval="50">1</span>
-                                <span class="counter-label">Clientes Feclices</span>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
 
 
             <div id="gtco-subscribe">

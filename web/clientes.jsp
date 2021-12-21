@@ -164,7 +164,8 @@
                     </div>
 
                     <!-- TABLA DE CLIENTES-->
-                    <%                        Controladora ctrl = new Controladora();
+                    <%
+                        Controladora ctrl = new Controladora();
                         List<Cliente> css = ctrl.obtenerClientes();
                     %>
                     <%  %>

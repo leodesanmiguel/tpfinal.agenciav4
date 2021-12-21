@@ -138,7 +138,7 @@
                                             <div class="tab-content">
                                                 <div class="tab-content-inner active" data-content="signup">
                                                     <h3>Reserva tu Viaje</h3>
-                                                    <form action="svrReserva" method="POST">
+                                                    <form action="#" method="POST">
                                                         <div class="row form-group">
                                                             <div class="col-md-12">
                                                                 <label for="nombre">Nombre</label>
