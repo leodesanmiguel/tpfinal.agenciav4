@@ -101,7 +101,14 @@
                         </div>
                         <div class="col-xs-8 text-right menu-1">
                             <ul>
-                                <li><a href="clientes.jsp">Clientes</a></li>
+                                <li class="has-dropdown">
+                                    <a href="clientes.jsp">Clientes</a>
+                                    <ul class="dropdown">
+                                        <li><a href="crearCliente.jsp">Nuevo</a></li>
+                                        <li><a href="#"></a></li>
+                                    </ul>
+
+                                </li>
                                 <li class="has-dropdown">
                                     <a href="#">Ventas</a>
                                     <ul class="dropdown">
@@ -213,7 +220,15 @@
                             </table>
                         </div>
 
+
+
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="crearCliente.jsp" class="btn active btn-lg btn-info" type="button">Crear Nuevo Cliente</a>
+                        </div>
+                    </div>         
+
                 </div>
             </div>
 
